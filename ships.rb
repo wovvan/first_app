@@ -1,10 +1,11 @@
 class Ship
 	attr_accessor :name, :water_out, :zagr
 
-	def initialize name, water_out
+	def initialize name, water_out, kind = "unknown"
 		@name = name || ''
 		@water_out = water_out || 0
-		@zagr = false
+    @zagr = false
+    @kind = kind
 	end
 	def zagruzka weight 
 		count = 0
@@ -41,16 +42,21 @@ class Port
 		end
 	end
 end
-ship = Ship.new("avrora", 100)
-ship2 = Ship.new("avrora2", 100)
+ship = Ship.new("avrora", 100, "G")
+ship2 = Ship.new("avrora2", 100, "P")
 ship3 = Ship.new("avrora3", 100)
 port = Port.new("artur")
-port.priem(ship)
-port.priem(ship2)
-port.print_ships
-puts "*************"
-port.otpravka(ship2)
-port.print_ships
+p ship
+p ship2
+p ship3
+# port.priem(ship)
+# port.priem(ship2)
+# port.priem(ship2)
+# port.priem(ship2)
+# port.print_ships
+# puts "*************"
+# port.otpravka(ship2)
+# port.print_ships
 
 
 # ДЗ Раздели корабли на пассажирские и грузовые
