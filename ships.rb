@@ -35,20 +35,34 @@ class Ship
 end
 
 class Port
-  attr_accessor :name, :ships
-  def initialize name
+  attr_accessor :name, :ships, :ship_count, :vmestimost
+  def initialize name, vmestimost
     @name = name
     @ships = []
+    @vmestimost = vmestimost
+    @ship_count = 0
   end
   def priem ship
     if (!@ships.include?(ship))
-      @ships << ship
+      if(@ship_count == vmestimost)
+        p "Порт " + @name.to_s + " полон"
+        else
+          @ships << ship
+          @ship_count += 1
+          p "Порт " + @name.to_s + " принял: " + ship.name
+      end 
     else
       p ship.name + ": такой корабль уже есть"
     end
   end
   def otpravka ship
+      if (@ships.include?(ship))
         @ships.delete ship
+        @ship_count -= 1
+        p "коробль " + ship.name + " отправлен"
+      else
+        p "коробля " + ship.name + " в порту нет"
+      end
   end
   def print_ships 
     @ships.each do |ship|
@@ -59,16 +73,15 @@ end
 ship = Ship.new("avrora", 100, "G", 300)
 ship2 = Ship.new("avrora2", 100, "P", 150)
 ship3 = Ship.new("avrora3", 100, "?", 100)
-port = Port.new("artur")
+ship4 = Ship.new("avrora4", 200, "P", 1100)
+port = Port.new("artur", 2)
 port.priem(ship)
 port.priem(ship2)
 port.priem(ship3)
-port.priem(ship3)
+port.otpravka(ship)
+port.priem(ship4)
 port.print_ships
 puts "*************"
-ship.ship_vmestimost
-ship2.ship_vmestimost
-ship3.ship_vmestimost
 # port.priem(ship)
 # port.priem(ship2)
 # port.priem(ship2)
