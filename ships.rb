@@ -1,12 +1,12 @@
 class Ship
   attr_accessor :name, :water_out, :zagr, :kind, :port
 
-  def initialize name = '', water_out = 0, kind = "unknown", vmestimost = 0, port
+  def initialize name = '', water_out = 0, kind = "unknown", max_ships = 0, port
     @name = name
     @water_out = water_out
     @zagr = false
     @kind = kind
-    @vmestimost = vmestimost
+    @max_ships = max_ships
     @port = port
   end
   def zagruzka weight 
@@ -25,27 +25,27 @@ class Ship
   def state
     if(zagr) then "загружен" else "не загружен" end
   end
-  def ship_vmestimost
+  def ship_max_ships
     if(@kind == 'P')
-        p @vmestimost.to_s + ' количество пассажиров'
+        p @max_ships.to_s + ' количество пассажиров'
       elsif (@kind == 'G')
-          p @vmestimost.to_s + ' тонн груза'
-      else p @vmestimost.to_s + ' вместимость чего-то'
+          p @max_ships.to_s + ' тонн груза'
+      else p @max_ships.to_s + ' вместимость чего-то'
     end
   end
 end
 
 class Port
-  attr_accessor :name, :ships, :vmestimost
-  def initialize name, vmestimost
+  attr_accessor :name, :ships, :port_volume
+  def initialize name, port_volume
     @name = name
     @ships = []
-    @vmestimost = vmestimost
+    @port_volume = port_volume
   end
-  def priem ship
+  def getting_ship ship
     if ship.port == self    
       if (!@ships.include?(ship))
-        if(@ships.count == vmestimost)
+        if(@ships.count == port_volume)
           p "Порт " + @name.to_s + " полон"
           else
             @ships << ship
@@ -58,7 +58,7 @@ class Port
       p "корабль " + ship.name + " не может быть прянят, он следует в порт " + ship.port.name
     end
   end
-  def otpravka ship
+  def sending_ship ship
       if (@ships.include?(ship))
         @ships.delete ship
         p "коробль " + ship.name + " отправлен"
@@ -79,21 +79,21 @@ ship2 = Ship.new("avrora2", 100, "P", 150, port2)
 ship3 = Ship.new("avrora3", 100, "?", 100, port)
 ship4 = Ship.new("avrora4", 200, "P", 1100, port2)
 ship5 = Ship.new("avrora5", 200, "P", 1100, port)
-port.priem(ship)
-port2.priem(ship2)
-port.priem(ship3)
-port.otpravka(ship)
-port2.priem(ship4)
-port2.priem(ship5)
+port.getting_ship(ship)
+port2.getting_ship(ship2)
+port.getting_ship(ship3)
+port.sending_ship(ship)
+port2.getting_ship(ship4)
+port2.getting_ship(ship5)
 port.print_ships
 puts "*************"
-# port.priem(ship)
-# port.priem(ship2)
-# port.priem(ship2)
-# port.priem(ship2)
+# port.getting_ship(ship)
+# port.getting_ship(ship2)
+# port.getting_ship(ship2)
+# port.getting_ship(ship2)
 # port.print_ships
 # puts "*************"
-# port.otpravka(ship2)
+# port.sending_ship(ship2)
 # port.print_ships
 
 
