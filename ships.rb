@@ -1,15 +1,14 @@
 class Ship
-  attr_accessor :name, :water_out, :zagr, :kind, :port
+  attr_accessor :name, :water_out, :state, :max_ships, :port
 
   def initialize name = '', water_out = 0, kind = "unknown", max_ships = 0, port
     @name = name
     @water_out = water_out
-    @zagr = false
-    @kind = kind
+    @state = false
     @max_ships = max_ships
     @port = port
   end
-  def zagruzka weight 
+  def load weight 
     count = 0
     while count < weight
       @water_out += 10
@@ -17,13 +16,13 @@ class Ship
       count += 10
       sleep(1)
     end
-    @zagr = true
+    @state = true
   end
-  def razgruzka
-    @zagr = false
+  def load_out
+    @state = false
   end  
-  def state
-    if(zagr) then "загружен" else "не загружен" end
+  def ship_state
+    if(state) then "загружен" else "не загружен" end
   end
   def ship_max_ships
     if(@kind == 'P')
@@ -72,20 +71,39 @@ class Port
     end
   end
 end
+
+class CargoShip < Ship
+  attr_accessor :name, :water_out, :max_ships, :port
+  def initialize name = '', water_out = 0, max_ships = 0, port
+    @name = name
+    @water_out = water_out
+    @max_ships = max_ships
+    @port = port
+  end
+  def hello
+    p "привет я #{@name} и я грузовой"
+  end
+end
+
+class PasShip < Ship
+  attr_accessor :name, :water_out, :max_ships, :port
+  def initialize name = '', water_out = 0, max_ships = 0, port
+    @name = name
+    @water_out = water_out
+    @max_ships = max_ships
+    @port = port
+  end
+  def hello
+    p "привет я #{@name} и я пассажирский"
+  end
+end
+ 
 port = Port.new("artur", 4)
 port2 = Port.new("pearl-harbor", 4)
-ship = Ship.new("avrora", 100, "G", 300, port)
-ship2 = Ship.new("avrora2", 100, "P", 150, port2)
-ship3 = Ship.new("avrora3", 100, "?", 100, port)
-ship4 = Ship.new("avrora4", 200, "P", 1100, port2)
-ship5 = Ship.new("avrora5", 200, "P", 1100, port)
-port.getting_ship(ship)
-port2.getting_ship(ship2)
-port.getting_ship(ship3)
-port.sending_ship(ship)
-port2.getting_ship(ship4)
-port2.getting_ship(ship5)
-port.print_ships
+ship = PasShip.new("avrora", 100, 300, port)
+ship2 = CargoShip.new("avrora2", 100, 150, port2)
+ship.hello
+ship2.hello
 puts "*************"
 # port.getting_ship(ship)
 # port.getting_ship(ship2)
